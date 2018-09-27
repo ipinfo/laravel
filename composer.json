@@ -1,7 +1,7 @@
 {
     "name": "ipinfo/ipinfolaravel",
     "description": ":description",
-    "license": "Apache",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "James Timmins",
