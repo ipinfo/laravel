@@ -53,41 +53,28 @@ To do this in a more secure manner and avoid putting secret keys in your codebas
 
 Details Data
 =============
-``IPinfo->getDetails()`` will return a ``Details`` object that contains all fields listed ``IPinfo developer docs <https://ipinfo.io/developers/responses#full-response>``_ with a few minor additions. Properties can be accessed directly.
+`$request->ipinfo` is a `Details` object that contains all fields listed `IPinfo developer docs <https://ipinfo.io/developers/responses#full-response>`_ with a few minor additions. Properties can be accessed directly.
 
->>> $details->hostname;
+>>> $request->ipinfo->hostname
 cpe-104-175-221-247.socal.res.rr.com
 
 
 Country Name
 ------------
 
-``Details->country_name`` will return the country name, as supplied by the ``countries.json`` file. See below for instructions on changing that file for use with non-English languages. ``Details->country`` will still return country code.
+`$request->ipinfo->country_name` will return the country name, as supplied by the `countries.json` file. See below for instructions on changing that file for use with non-English languages. `$request->ipinfo->country` will still return the country code.
 
->>> $details->country;
+>>> request->ipinfo->country
 US
->>> $details->country_name;
+>>> request->ipinfo->country_name
 United States
-
-
-Longitude and Latitude
-----------------------
-
-``Details->latitude`` and ``Details->longitude`` will return latitude and longitude, respectively, as strings. ``Details->loc`` will still return a composite string of both values.
-
->>> $details->loc;
-34.0293,-118.3570
->>> $details->latitude;
-34.0293
->>> $details->longitude;
--118.3570
 
 Accessing all properties
 ------------------------
 
-``Details->all`` will return all details data as a dictionary.
+`$request->ipinfo->all` will return all details data as an array.
 
->>> $details->all;
+>>> $request->ipinfo->all
     {
     'asn': {  'asn': 'AS20001',
                'domain': 'twcable.com',
@@ -102,6 +89,7 @@ Accessing all properties
     'country_name': 'United States',
     'hostname': 'cpe-104-175-221-247.socal.res.rr.com',
     'ip': '104.175.221.247',
+    'ip_address': IPv4Address('104.175.221.247'),
     'loc': '34.0293,-118.3570',
     'latitude': '34.0293',
     'longitude': '-118.3570',
