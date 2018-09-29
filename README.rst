@@ -35,18 +35,6 @@ will return the following string to the ``index`` view::
 
   "The IP address 216.239.36.21 is located in the city of Emeryville."
 
-
-The ``IPinfo->getDetails()`` method accepts an IP address as an optional, positional argument. If no IP address is specified, the API will return data for the IP address from which it receives the request.
-
->>> $access_token = '123456789abc';
->>> $client = new IPinfo($access_token);
->>> $ip_address = '216.239.36.21';
->>> $details = $client->getDetails($ip_address);
->>> $detail->city;
-Emeryville
->>> $details->loc;
-37.8342,-122.2900
-
 Authentication
 ==============
 The IPinfo library can be authenticated with your IPinfo API token, which is passed in as a positional argument. It also works without an authentication token, but in a more limited capacity.
