@@ -105,14 +105,16 @@ In-memory caching of ``Details`` data is provided by default via the ``sabre/cac
 Modifying cache options
 -----------------------
 
-Default cache TTL and maximum size can be changed by setting values in the ``$settings`` argument array. 
-
 * Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
 * Default TTL: 24 hours (in seconds)
 
->>> $access_token = '123456789abc';
->>> $settings = ['cache_maxsize' => 30, 'cache_ttl' => 128];
->>> $client = new IPinfo($access_token, $settings);
+Default cache TTL and maximum size can be changed by adding the following to your app's ``\config\services.php`` file and replacing ``{{ttl}}`` and ``{{maxsize}}`` values:: 
+
+  'ipinfo' => [
+        ...
+        'ttl' => {{ttl}},
+        'maxsize' => {{maxsize}},
+    ],
 
 Using a different cache
 -----------------------
