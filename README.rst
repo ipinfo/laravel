@@ -64,9 +64,9 @@ Country Name
 
 `$request->ipinfo->country_name` will return the country name, as supplied by the `countries.json` file. See below for instructions on changing that file for use with non-English languages. `$request->ipinfo->country` will still return the country code.
 
->>> request->ipinfo->country
+>>> $request->ipinfo->country
 US
->>> request->ipinfo->country_name
+>>> $request->ipinfo->country_name
 United States
 
 Accessing all properties
@@ -127,11 +127,18 @@ It's possible to use a custom cache by creating a child class of the ``CacheInte
 
 Internationalization
 ====================
-When looking up an IP address, the response object includes a ``Details->country_name`` attribute which includes the country name based on American English. It is possible to return the country name in other languages by setting the ``countries_file`` keyword argument when creating the ``IPinfo`` object.
+When looking up an IP address, the response object includes a ``$request->ipinfo->country_name`` property which includes the country name based on American English. It is possible to return the country name in other languages by telling the library to read from a custom file. To define a custom file, add the following to your app's ``\config\services.php`` file and replace ``{{countries}}`` with your own file path:: 
+
+
+  'ipinfo' => [
+        ...
+        'countries_file' => {{countries}},
+    ],
 
 The file must be a ``.json`` file with the following structure::
 
     {
+     {{country_code}}: {{country_name}}, 
      "BD": "Bangladesh",
      "BE": "Belgium",
      "BF": "Burkina Faso",
