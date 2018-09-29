@@ -119,13 +119,13 @@ Default cache TTL and maximum size can be changed by adding the following to you
 Using a different cache
 -----------------------
 
-It's possible to use a custom cache by creating a child class of the ``CacheInterface <>``_ class and passing this into the handler object with the ``cache`` keyword argument. FYI this is known as ``the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>``_.
+It's possible to use a custom cache by creating a child class of the ``CacheInterface <>``_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as ``the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>``_.
+::
 
-
->>> $access_token = '123456789abc';
->>> $settings = ['cache' => $my_fancy_custom_cache];
->>> $client = new IPinfo($access_token, $settings);
-
+  'ipinfo' => [
+        ...
+        'cache' => new MyCustomCacheObject(),
+    ],
 
 Internationalization
 ====================
