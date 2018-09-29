@@ -37,10 +37,18 @@ will return the following string to the ``index`` view::
 
 Authentication
 ==============
-The IPinfo library can be authenticated with your IPinfo API token, which is passed in as a positional argument. It also works without an authentication token, but in a more limited capacity.
+The IPinfo library can be authenticated with your IPinfo API token. It also works without an authentication token, but in a more limited capacity. To set your access token, add the following to your app's ``\config\services.php`` file and replace ``{{access_token}}`` with your own token:: 
 
->>> $access_token = '123456789abc';
->>> $client = new IPinfo($access_token);
+
+  'ipinfo' => [
+        'access_token' => {{access_token}},
+    ],
+
+To do this in a more secure manner and avoid putting secret keys in your codebase, create an ``IPINFO_SECRET`` (or similar) environment variable and access this value from within ``\config\services.php``, like so::
+
+  'ipinfo' => [
+        'access_token' => env('IPINFO_SECRET'),
+    ],
 
 
 Details Data
