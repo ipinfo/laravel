@@ -13,7 +13,7 @@ Installation
 
 >>> composer require ipinfo/ipinfolaravel
 
-Open your applications ``\app\Http\Kernel.php`` file and add the following to the ``Kernel::middleware`` property::
+Open your application's ``\app\Http\Kernel.php`` file and add the following to the ``Kernel::middleware`` property::
 
   protected $middleware = [
   ...
@@ -23,6 +23,18 @@ Open your applications ``\app\Http\Kernel.php`` file and add the following to th
 
 Usage
 =====
+Once configured, ``ipinfolaravel`` will make IP address data accessible within Laravel's Request object under the ``ipinfo`` property. The following view from the ``web.php`` file which defines routes::
+
+  Route::get('/', function (Request $request) {
+      $location_text = "The IP address {$request->ipinfo->ip} is located in the city of {$request->ipinfo->city}."
+
+      return view('index', ['location' => $location_text]);
+  });
+
+will return the following string to the ``index`` view::
+
+  "The IP address 216.239.36.21 is located in the city of Emeryville."
+
 
 The ``IPinfo->getDetails()`` method accepts an IP address as an optional, positional argument. If no IP address is specified, the API will return data for the IP address from which it receives the request.
 
