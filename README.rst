@@ -100,7 +100,7 @@ Accessing all properties
 
 Caching
 =======
-By default, in-memory caching is not provided as part of the ``ipinfolaravel`` library because HTTP requests are stateless, so this would not be possible. However, it is possible to use a custom cache by creating a child class of the ``CacheInterface <>``_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as ``the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>``_.
+By default, in-memory caching is not provided as part of the ``ipinfolaravel`` library because HTTP requests are stateless, so this would not be possible. However, it is possible to use a custom cache by creating a child class of the `CacheInterface <https://github.com/ipinfo/php/blob/master/src/cache/Interface.php>`_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as `the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>`_.
 ::
 
   'ipinfo' => [
