@@ -100,26 +100,7 @@ Accessing all properties
 
 Caching
 =======
-In-memory caching of ``Details`` data is provided by default via the ``sabre/cache <https://github.com/sabre-io/cache/>``_ library. LRU (least recently used) cache-invalidation functionality has been added to the default TTL (time to live). This means that values will be cached for the specified duration; if the cache's max size is reached, cache values will be invalidated as necessary, starting with the oldest cached value.
-
-Modifying cache options
------------------------
-
-* Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
-* Default TTL: 24 hours (in seconds)
-
-Default cache TTL and maximum size can be changed by adding the following to your app's ``\config\services.php`` file and replacing ``{{ttl}}`` and ``{{maxsize}}`` values:: 
-
-  'ipinfo' => [
-        ...
-        'ttl' => {{ttl}},
-        'maxsize' => {{maxsize}},
-    ],
-
-Using a different cache
------------------------
-
-It's possible to use a custom cache by creating a child class of the ``CacheInterface <>``_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as ``the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>``_.
+By default, in-memory caching is not provided as part of the ``ipinfolaravel`` library because HTTP requests are stateless, so this would not be possible. However, it is possible to use a custom cache by creating a child class of the ``CacheInterface <>``_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as ``the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>``_.
 ::
 
   'ipinfo' => [
