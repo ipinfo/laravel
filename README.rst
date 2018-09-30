@@ -147,3 +147,25 @@ The file must be a ``.json`` file with the following structure::
      "BG": "Bulgaria"
      ...
     }
+
+Filtering
+=========
+
+By default, ``ipinfolaravel`` filters out requests that have ``bot`` or ``spider`` in the user-agent. Instead of looking up IP address data for these requests, the ``$request->ipinfo`` attribute is set to ``null``. This is to prevent you from unnecessarily using up requests on non-user traffic. This behavior can be switched off by adding the following to your app's ``\config\services.php`` file::
+
+  'ipinfo' => [
+        ...
+        'filter' => false,
+   ],
+    
+To set your own filtering rules, *thereby replacing the default filter*, you can set ``ipinfo.config`` to your own, custom callable function which satisfies the following rules:
+
+* Accepts one request.
+* Returns *True to filter out, False to allow lookup*
+
+To use your own filter function::
+
+  'ipinfo' => [
+        ...
+        'filter' => $customFilterFunction,
+  ],
