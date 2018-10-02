@@ -21,7 +21,7 @@ class ipinfolaravel
     public $settings = [];
 
     /**
-     * Return true to skip IPinfo lookup, otherwise return false. 
+     * Return true to skip IPinfo lookup, otherwise return false.
      * @var function
      */
     public $filter = null;
@@ -57,7 +57,6 @@ class ipinfolaravel
    */
     public function configure()
     {
-      $ipinfo_config =
       $this->access_token = config('services.ipinfo.access_token', null);
       $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
 
