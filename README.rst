@@ -53,7 +53,7 @@ To do this in a more secure manner and avoid putting secret keys in your codebas
 
 Details Data
 =============
-`$request->ipinfo` is a `Details` object that contains all fields listed `IPinfo developer docs <https://ipinfo.io/developers/responses#full-response>`_ with a few minor additions. Properties can be accessed directly.
+``$request->ipinfo`` is a ``Details`` object that contains all fields listed `IPinfo developer docs <https://ipinfo.io/developers/responses#full-response>`_ with a few minor additions. Properties can be accessed directly.
 
 >>> $request->ipinfo->hostname
 cpe-104-175-221-247.socal.res.rr.com
@@ -62,7 +62,7 @@ cpe-104-175-221-247.socal.res.rr.com
 Country Name
 ------------
 
-`$request->ipinfo->country_name` will return the country name, as supplied by the `countries.json` file. See below for instructions on changing that file for use with non-English languages. `$request->ipinfo->country` will still return the country code.
+``$request->ipinfo->country_name`` will return the country name, as supplied by the ``countries.json`` file. See below for instructions on changing that file for use with non-English languages. ``$request->ipinfo->country`` will still return the country code.
 
 >>> $request->ipinfo->country
 US
@@ -72,7 +72,7 @@ United States
 Accessing all properties
 ------------------------
 
-`$request->ipinfo->all` will return all details data as an array.
+``$request->ipinfo->all`` will return all details data as an array.
 
 >>> $request->ipinfo->all
     {
@@ -100,10 +100,29 @@ Accessing all properties
 
 Caching
 =======
-By default, in-memory caching is not provided as part of the ``ipinfolaravel`` library because HTTP requests are stateless, so this would not be possible. However, it is possible to use a custom cache by creating a child class of the `CacheInterface <https://github.com/ipinfo/php/blob/master/src/cache/Interface.php>`_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as `the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>`_.
+In-memory caching of ``Details`` data is provided by default via Laravel's file-based cache. LRU (least recently used) cache-invalidation functionality has been added to the default TTL (time to live). This means that values will be cached for the specified duration; if the cache's max size is reached, cache values will be invalidated as necessary, starting with the oldest cached value.
+
+Modifying cache options
+-----------------------
+
+Default cache TTL and maximum size can be changed by setting values in the ``$settings`` argument array. 
+
+* Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
+* Default TTL: 24 hours (in minutes)
 ::
 
   'ipinfo' => [
+      'cache_maxsize' => {{cache_maxsize}},
+      'cache_ttl' => {{cache_ttl}},
+  ],
+
+Using a different cache
+-----------------------
+
+It is possible to use a custom cache by creating a child class of the `CacheInterface <https://github.com/ipinfo/php/blob/master/src/cache/Interface.php>`_ class and setting the the ``cache`` config value in ``\config\services.php``. FYI this is known as `the Strategy Pattern <https://sourcemaking.com/design_patterns/strategy>`_.
+::
+
+    'ipinfo' => [
         ...
         'cache' => new MyCustomCacheObject(),
     ],
@@ -113,7 +132,7 @@ Internationalization
 When looking up an IP address, the response object includes a ``$request->ipinfo->country_name`` property which includes the country name based on American English. It is possible to return the country name in other languages by telling the library to read from a custom file. To define a custom file, add the following to your app's ``\config\services.php`` file and replace ``{{countries}}`` with your own file path:: 
 
 
-  'ipinfo' => [
+   'ipinfo' => [
         ...
         'countries_file' => {{countries}},
     ],
