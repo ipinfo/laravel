@@ -10,7 +10,7 @@ This is the official Laravel client library for the [IPinfo.io](https://ipinfo.i
 
 You'll need an IPinfo API access token, which you can get by singing up for a free account at [https://ipinfo.io/signup](https://ipinfo.io/signup?ref=lib-Laravel).
 
-The free plan is limited to 1,000 requests a day, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing?ref=lib-Laravel).
+The free plan is limited to 50,000 requests per month, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing?ref=lib-Laravel).
 
 #### Installation
 
@@ -127,7 +127,7 @@ Default cache TTL and maximum size can be changed by setting values in the `$set
     'cache_maxsize' => {{cache_maxsize}},
     'cache_ttl' => {{cache_ttl}},
 ],
-```  
+```
 
 #### Using a different cache
 
