@@ -44,7 +44,7 @@ class ipinfolaravel
           $details = null;
         } else {
           $ipinfo = new IPinfoClient($this->access_token, $this->settings);
-          $details = $ipinfo->getDetails();
+          $details = $ipinfo->getDetails($this->getIp());
         }
 
         $request->merge(['ipinfo' => $details]);
