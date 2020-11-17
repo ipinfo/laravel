@@ -76,7 +76,7 @@ class ipinfolaravel
     /**
      * Should IP lookup be skipped.
      * @param  Request $request Request object.
-     * @return bool          Whether or not to filter out.
+     * @return bool Whether or not to filter out.
      */
     public function defaultFilter($request)
     {
