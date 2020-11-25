@@ -31,7 +31,6 @@ class ipinfolaravel
 
     /**
      * Handle an incoming request.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
@@ -52,9 +51,9 @@ class ipinfolaravel
         return $next($request);
     }
 
-  /**
-   * Determine settings based on user-defined configs or use defaults.
-   */
+    /**
+     * Determine settings based on user-defined configs or use defaults.
+     */
     public function configure()
     {
         $this->access_token = config('services.ipinfo.access_token', null);
