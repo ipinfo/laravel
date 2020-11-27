@@ -22,19 +22,18 @@ composer require ipinfo/ipinfolaravel
 
 Open your application's `\app\Http\Kernel.php` file and add the following to the `Kernel::middleware` property:
 
-```
+```php
 protected $middleware = [
-  ...
-  \ipinfo\ipinfolaravel\ipinfolaravel::class,
-  ];
+    ...
+    \ipinfo\ipinfolaravel\ipinfolaravel::class,
+];
 ```
 
 #### Quick Start
 
-```
+```php
 Route::get('/', function (Request $request) {
-    $location_text = "The IP address {$request->ipinfo->ip} is located in the city of {$request->ipinfo->city}."
-
+    $location_text = "The IP address {$request->ipinfo->ip}.";
     return view('index', ['location' => $location_text]);
 });
 ```
@@ -42,32 +41,32 @@ Route::get('/', function (Request $request) {
 will return the following string to the `index` view:
 
 ```
-"The IP address 216.239.36.21 is located in the city of Emeryville."
+"The IP address 127.0.0.1."
 ```
 
 ### Authentication
 
 The IPinfo library can be authenticated with your IPinfo API token. It also works without an authentication token, but in a more limited capacity. To set your access token, add the following to your app's `\config\services.php` file and replace `{{access_token}}` with your own token:
 
-```
+```php
 'ipinfo' => [
-      'access_token' => {{access_token}},
-  ],
+    'access_token' => {{access_token}},
+],
 ```
 
 To do this in a more secure manner and avoid putting secret keys in your codebase, create an `IPINFO_SECRET` (or similar) environment variable and access this value from within `\config\services.php`, like so:
 
-```
+```php
 'ipinfo' => [
-      'access_token' => env('IPINFO_SECRET'),
-  ],
+    'access_token' => env('IPINFO_SECRET'),
+],
 ```
 
 ### Details Data
 
 `$request->ipinfo` is a `Details` object that contains all fields listed [IPinfo developer docs](https://ipinfo.io/developers/responses#full-response) with a few minor additions. Properties can be accessed directly.
 
-```
+```php
 >>> $request->ipinfo->hostname
 cpe-104-175-221-247.socal.res.rr.com
 ```
@@ -76,7 +75,7 @@ cpe-104-175-221-247.socal.res.rr.com
 
 `$request->ipinfo->country_name` will return the country name, as supplied by the `countries.json` file. See below for instructions on changing that file for use with non-English languages. `$request->ipinfo->country` will still return the country code.
 
-```
+```php
 >>> $request->ipinfo->country
 US
 >>> $request->ipinfo->country_name
@@ -87,7 +86,7 @@ United States
 
 `$request->ipinfo->all` will return all details data as an array.
 
-```
+```php
 >>> $request->ipinfo->all
 {
 'asn': {  'asn': 'AS20001',
@@ -124,7 +123,7 @@ Default cache TTL and maximum size can be changed by setting values in the `$set
 * Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
 * Default TTL: 24 hours (in minutes)
 
-```
+```php
 'ipinfo' => [
     'cache_maxsize' => {{cache_maxsize}},
     'cache_ttl' => {{cache_ttl}},
@@ -135,7 +134,7 @@ Default cache TTL and maximum size can be changed by setting values in the `$set
 
 It is possible to use a custom cache by creating a child class of the [CacheInterface](https://github.com/ipinfo/php/blob/master/src/cache/Interface.php) class and setting the the `cache` config value in `\config\services.php`. FYI this is known as [the Strategy Pattern](https://sourcemaking.com/design_patterns/strategy).
 
-```
+```php
 'ipinfo' => [
     ...
     'cache' => new MyCustomCacheObject(),
@@ -146,7 +145,7 @@ It is possible to use a custom cache by creating a child class of the [CacheInte
 
 When looking up an IP address, the response object includes a `$request->ipinfo->country_name` property which includes the country name based on American English. It is possible to return the country name in other languages by telling the library to read from a custom file. To define a custom file, add the following to your app's `\config\services.php` file and replace `{{countries}}` with your own file path.
 
-```
+```php
 'ipinfo' => [
     ...
     'countries_file' => {{countries}},
@@ -157,12 +156,12 @@ The file must be a `.json` file with the following structure:
 
 ```
 {
- {{country_code}}: {{country_name}},
- "BD": "Bangladesh",
- "BE": "Belgium",
- "BF": "Burkina Faso",
- "BG": "Bulgaria"
- ...
+    {{country_code}}: {{country_name}},
+    "BD": "Bangladesh",
+    "BE": "Belgium",
+    "BF": "Burkina Faso",
+    "BG": "Bulgaria"
+    ...
 }
 ```
 
@@ -170,10 +169,10 @@ The file must be a `.json` file with the following structure:
 
 By default, `ipinfolaravel` filters out requests that have `bot` or `spider` in the user-agent. Instead of looking up IP address data for these requests, the `$request->ipinfo` attribute is set to `null`. This is to prevent you from unnecessarily using up requests on non-user traffic. This behavior can be switched off by adding the following to your app's `\config\services.php` file.
 
-```
+```php
 'ipinfo' => [
-      ...
-      'filter' => false,
+    ...
+    'filter' => false,
  ],
 ```
 
@@ -184,10 +183,10 @@ To set your own filtering rules, *thereby replacing the default filter*, you can
 
 To use your own filter function:
 
-```
+```php
 'ipinfo' => [
-      ...
-      'filter' => $customFilterFunction,
+    ...
+    'filter' => $customFilterFunction,
 ],
 ```
 
