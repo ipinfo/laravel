@@ -21,7 +21,7 @@
         "ipinfo/ipinfo": "^2.0@dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.4.3",
+        "phpunit/phpunit": "~9",
         "mockery/mockery": "^1.4.2",
         "orchestra/testbench": "^6.4.0",
         "sempro/phpunit-pretty-print": "^1.3.0",
