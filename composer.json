@@ -17,8 +17,8 @@
     "homepage": "https://github.com/ipinfo/ipinfolaravel",
     "keywords": ["Laravel", "ipinfolaravel"],
     "require": {
-        "illuminate/support": "~5",
-        "ipinfo/ipinfo": "^1.0@dev"
+        "illuminate/support": ">=5, <=9",
+        "ipinfo/ipinfo": "^2.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0",
