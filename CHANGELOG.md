@@ -2,6 +2,11 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.1.0
+
+- Update to the latest IPinfo PHP package, which supports PHP 8 and deprecates
+  PHP 7.2 support.
+
 ## Version 2.0
 
 - Supports Laravel 5.x to 8.x.
