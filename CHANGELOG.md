@@ -2,6 +2,11 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.1.1
+
+- Fixed https://github.com/ipinfo/laravel/issues/14 with
+  https://github.com/ipinfo/laravel/pull/15.
+
 ## v2.1.0
 
 - Update to the latest IPinfo PHP package, which supports PHP 8 and deprecates
