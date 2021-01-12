@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.1.2
+
+- Use v2.1.1 of PHP SDK (https://github.com/ipinfo/php/releases/tag/v2.1.1).
+
 ## v2.1.1
 
 - Fixed https://github.com/ipinfo/laravel/issues/14 with
