@@ -2,6 +2,11 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.1.3
+
+- The IPinfo PHP SDK will no longer be initialized multiple times - one will be
+  initialized at application startup and used throughout.
+
 ## v2.1.2
 
 - Use v2.1.1 of PHP SDK (https://github.com/ipinfo/php/releases/tag/v2.1.1).

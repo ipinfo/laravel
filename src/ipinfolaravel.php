@@ -42,8 +42,7 @@ class ipinfolaravel
         if ($this->filter && call_user_func($this->filter, $request)) {
             $details = null;
         } else {
-            $ipinfo = new IPinfoClient($this->access_token, $this->settings);
-            $details = $ipinfo->getDetails($request->ip());
+            $details = $this->ipinfo->getDetails($request->ip());
         }
 
         $request->request->set('ipinfo', $details);
@@ -70,6 +69,8 @@ class ipinfolaravel
             $ttl = config('services.ipinfo.cache_ttl', self::CACHE_TTL);
             $this->settings['cache'] = new DefaultCache($maxsize, $ttl);
         }
+
+        $this->ipinfo = new IPinfoClient($this->access_token, $this->settings);
     }
 
     /**
