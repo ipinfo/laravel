@@ -51,7 +51,7 @@ class ipinfolaravel
                 // middleware unfortunately, so we catch it for them. but for
                 // backwards-compatibility, we throw the exception again unless
                 // they've told us not to.
-                if (config('services.ipinfo.no_except', false) != true) {
+                if ($this->no_except != true) {
                     throw $e;
                 }
             }
@@ -69,6 +69,7 @@ class ipinfolaravel
     {
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
+        $this->no_except = config('services.ipinfo.no_except', false);
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {
             $this->settings['countries_file'] = $custom_countries;
