@@ -2,6 +2,12 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.2.0
+
+- Added the `no_except` config variable which allows suppressing exceptions
+  that occur in the IPinfo middleware; the `$request->ipinfo` object will be
+  `null` in this case.
+
 ## v2.1.3
 
 - The IPinfo PHP SDK will no longer be initialized multiple times - one will be
