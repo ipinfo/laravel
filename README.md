@@ -190,6 +190,25 @@ To use your own filter function:
 ],
 ```
 
+### Suppressing Exceptions
+
+Laravel middleware does not allow you to catch exceptions from other
+middleware, so if the IPinfo middleware throws an exception, it'll be quite
+hard to deal with it.
+
+We allow suppressing exceptions by specifying the `no_except` key in the
+config:
+
+```php
+'ipinfo' => [
+    ...
+    'no_except' => true,
+],
+```
+
+If an exception occurs when this setting is `true`, the `$request->ipinfo`
+object will be equal to `null`.
+
 ### Other Libraries
 
 There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
