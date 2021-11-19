@@ -42,7 +42,19 @@ class ipinfolaravel
         if ($this->filter && call_user_func($this->filter, $request)) {
             $details = null;
         } else {
-            $details = $this->ipinfo->getDetails($request->ip());
+            try {
+                $details = $this->ipinfo->getDetails($request->ip());
+            } catch (\Exception $e) {
+                $details = null;
+
+                // users can't catch this exception with their own wrapper
+                // middleware unfortunately, so we catch it for them. but for
+                // backwards-compatibility, we throw the exception again unless
+                // they've told us not to.
+                if ($this->no_except != true) {
+                    throw $e;
+                }
+            }
         }
 
         $request->request->set('ipinfo', $details);
@@ -57,6 +69,7 @@ class ipinfolaravel
     {
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
+        $this->no_except = config('services.ipinfo.no_except', false);
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {
             $this->settings['countries_file'] = $custom_countries;
