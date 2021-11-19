@@ -42,7 +42,19 @@ class ipinfolaravel
         if ($this->filter && call_user_func($this->filter, $request)) {
             $details = null;
         } else {
-            $details = $this->ipinfo->getDetails($request->ip());
+            try {
+                $details = $this->ipinfo->getDetails($request->ip());
+            } catch (\Exception $e) {
+                $details = null;
+
+                // users can't catch this exception with their own wrapper
+                // middleware unfortunately, so we catch it for them. but for
+                // backwards-compatibility, we throw the exception again unless
+                // they've told us not to.
+                if (config('services.ipinfo.no_except', false) != true) {
+                    throw $e;
+                }
+            }
         }
 
         $request->request->set('ipinfo', $details);
