@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.3.0
+
+- Added support for Laravel 9 with latest IPinfo PHP package.
+
 ## v2.2.0
 
 - Added the `no_except` config variable which allows suppressing exceptions
