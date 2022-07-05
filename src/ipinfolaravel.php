@@ -83,6 +83,12 @@ class ipinfolaravel
             $this->settings['cache'] = new DefaultCache($maxsize, $ttl);
         }
 
+        if ($custom_iphandler = config('services.ipinfo.iphandler', null)) {
+            $this->settings['iphandler'] = $custom_iphandler;
+        } else {
+            // TODO: Handle this case, with default options
+        }
+
         $this->ipinfo = new IPinfoClient($this->access_token, $this->settings);
     }
 
