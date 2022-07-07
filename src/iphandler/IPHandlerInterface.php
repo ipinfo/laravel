@@ -7,10 +7,11 @@ namespace ipinfo\ipinfolaravel\iphandler;
  */
 interface IPHandlerInterface
 {
-
-  /**
-   * Get IP address.
-   * @return string IP address.
-   */
-    public function getIP();
+    
+    /**
+     * Get IP address.
+     * @param \Illuminate\Http\Request $request
+     * @return string IP address.
+     */
+    public function getIP($request);
 }
