@@ -5,7 +5,7 @@ namespace ipinfo\ipinfolaravel;
 use Closure;
 use ipinfo\ipinfo\IPinfo as IPinfoClient;
 use ipinfo\ipinfolaravel\DefaultCache;
-use ipinfo\ipinfolaravel\iphandler\DefaultIPHandler;
+use ipinfo\ipinfolaravel\iphandler\DefaultIPSelector;
 
 class ipinfolaravel
 {
@@ -77,7 +77,7 @@ class ipinfolaravel
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
         $this->no_except = config('services.ipinfo.no_except', false);
-        $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPHandler());
+        $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPSelector());
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {
             $this->settings['countries_file'] = $custom_countries;

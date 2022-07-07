@@ -3,13 +3,13 @@
 namespace ipinfo\ipinfolaravel\iphandler;
 
 /**
- * Default implementation of the IPHandlerInterface. Selects default ip from request.
+ * Implementation of the IPHandlerInterface used as default option. Retrieve IP from request.
  */
-class DefaultIPHandler implements IPHandlerInterface
+class DefaultIPSelector implements IPHandlerInterface
 {
 
     /**
-     * Selectes default IP address from request.
+     * Selects default IP address from request.
      * @param \Illuminate\Http\Request $request
      * @return string IP address.
      */
