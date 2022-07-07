@@ -141,6 +141,43 @@ It is possible to use a custom cache by creating a child class of the [CacheInte
 ],
 ```
 
+### Choosing which IP to retrieve
+
+By default the ip from the request object is used. But the request may also be coming from a proxy server, so there is option provided to use different ip selectors.
+
+#### Using built-in ip selectors
+
+##### DefaultIPSelector
+
+Object of [DefaultIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/DefaultIPSelector.php) class is used by default if no selector is provided. It returns the ip address from incoming request object. This address can be also of some proxy server forwarding the origninating client's request. This selector can be set explicitly by setting the `ip_selector` config value in `\config\services.php`.
+
+```php
+'ipinfo' => [
+    'ip_selector' => new DefaultIPSelector(),
+],
+```
+
+##### OriginatingIPSelector
+
+Object of [OriginatingIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/OriginatingIPSelector.php) class can be used as alternate to provide the originating client ip address. The originating client ip address is extracted from x-forwarded-for header. Keep in mind that this ip address is least trusted one. This selector can be set by setting the `ip_selector` config value in `\config\services.php`.
+
+```php
+'ipinfo' => [
+    'ip_selector' => new OriginatingIPSelector(),
+],
+```
+
+#### Using a different ip selector
+
+User may want to use custom techniques for getting an ip address out of the request according to their requirements. For this purpose custom ip selector can be created. This is done by implementing [IPHandlerInterface](https://github.com/ipinfo/php/blob/master/src/iphandler/IPHandlerInterface.php) and setting the the `ip_selector` config value in `\config\services.php`.
+
+```php
+'ipinfo' => [
+    ...
+    'ip_selector' => new CustomIPSelector(),
+],
+```
+
 ### Internationalization
 
 When looking up an IP address, the response object includes a `$request->ipinfo->country_name` property which includes the country name based on American English. It is possible to return the country name in other languages by telling the library to read from a custom file. To define a custom file, add the following to your app's `\config\services.php` file and replace `{{countries}}` with your own file path.
