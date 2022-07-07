@@ -132,7 +132,7 @@ Default cache TTL and maximum size can be changed by setting values in the `$set
 
 #### Using a different cache
 
-It is possible to use a custom cache by creating a child class of the [CacheInterface](https://github.com/ipinfo/php/blob/master/src/cache/Interface.php) class and setting the the `cache` config value in `\config\services.php`. FYI this is known as [the Strategy Pattern](https://sourcemaking.com/design_patterns/strategy).
+It is possible to use a custom cache by creating a child class of the [CacheInterface](https://github.com/ipinfo/php/blob/master/src/cache/CacheInterface.php) class and setting the the `cache` config value in `\config\services.php`. FYI this is known as [the Strategy Pattern](https://sourcemaking.com/design_patterns/strategy).
 
 ```php
 'ipinfo' => [
