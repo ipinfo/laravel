@@ -5,6 +5,7 @@ namespace ipinfo\ipinfolaravel;
 use Closure;
 use ipinfo\ipinfo\IPinfo as IPinfoClient;
 use ipinfo\ipinfolaravel\DefaultCache;
+use ipinfo\ipinfolaravel\iphandler\DefaultIPHandler;
 
 class ipinfolaravel
 {
@@ -26,6 +27,12 @@ class ipinfolaravel
      */
     public $filter = null;
 
+    /**
+     * Provides ip.
+     * @var ipinfo\ipinfolaravel\iphandler\IPHandlerInterface
+     */
+    public $ip_selector = null;
+
     const CACHE_MAXSIZE = 4096;
     const CACHE_TTL = 60 * 24;
 
@@ -43,7 +50,7 @@ class ipinfolaravel
             $details = null;
         } else {
             try {
-                $details = $this->ipinfo->getDetails($request->ip());
+                $details = $this->ipinfo->getDetails($this->ip_selector->getIP($request));                
             } catch (\Exception $e) {
                 $details = null;
 
@@ -70,6 +77,7 @@ class ipinfolaravel
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
         $this->no_except = config('services.ipinfo.no_except', false);
+        $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPHandler());
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {
             $this->settings['countries_file'] = $custom_countries;
@@ -81,12 +89,6 @@ class ipinfolaravel
             $maxsize = config('services.ipinfo.cache_maxsize', self::CACHE_MAXSIZE);
             $ttl = config('services.ipinfo.cache_ttl', self::CACHE_TTL);
             $this->settings['cache'] = new DefaultCache($maxsize, $ttl);
-        }
-
-        if ($custom_iphandler = config('services.ipinfo.iphandler', null)) {
-            $this->settings['iphandler'] = $custom_iphandler;
-        } else {
-            // TODO: Handle this case, with default options
         }
 
         $this->ipinfo = new IPinfoClient($this->access_token, $this->settings);
