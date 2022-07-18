@@ -143,7 +143,9 @@ It is possible to use a custom cache by creating a child class of the [CacheInte
 
 ### IP Selection Mechanism
 
-By default, the ip from the incoming request is used. But the request may also be reaching through some proxy server, in which case the ip of that proxy server ended up being used. To handle this issue, option is provided to use different/custom ip selector.
+By default, the IP from the incoming request is used.
+
+Since the desired IP by your system may be in other locations, the IP selection mechanism is configurable and some alternative built-in options are available.
 
 #### Using built-in ip selectors
 
