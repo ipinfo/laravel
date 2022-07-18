@@ -175,7 +175,9 @@ This selector can be set by setting the `ip_selector` config value in `\config\s
 
 #### Using a custom IP selector
 
-User may want to use custom techniques for getting an ip address out of the request according to their requirements. For this purpose custom ip selector can be created. This is done by implementing [IPHandlerInterface](https://github.com/ipinfo/php/blob/master/src/iphandler/IPHandlerInterface.php) and setting the the `ip_selector` config value in `\config\services.php`.
+In case a custom IP selector is required, you may implement the [IPHandlerInterface](https://github.com/ipinfo/php/blob/master/src/iphandler/IPHandlerInterface.php) interface and set the `ip_selector` config value in `\config\services.php`.
+
+For example:
 
 ```php
 'ipinfo' => [
