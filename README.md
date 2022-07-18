@@ -163,7 +163,9 @@ This selector can be set explicitly by setting the `ip_selector` config value in
 
 ##### OriginatingIPSelector
 
-Object of [OriginatingIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/OriginatingIPSelector.php) class can be used as alternate to provide the originating client ip address. The originating client ip address is extracted from x-forwarded-for header. Keep in mind that this ip address is least trusted one if proxies are involved. This selector can be set by setting the `ip_selector` config value in `\config\services.php`.
+A [OriginatingIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/OriginatingIPSelector.php) selects an IP address by trying to extract it from the `X-Forwarded-For` header. This is not always the most reliable unless your proxy setup allows you to trust it. It will default to the source IP on the request if the header doesn't exist.
+
+This selector can be set by setting the `ip_selector` config value in `\config\services.php`.
 
 ```php
 'ipinfo' => [
