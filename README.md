@@ -151,7 +151,9 @@ Since the desired IP by your system may be in other locations, the IP selection 
 
 ##### DefaultIPSelector
 
-Object of [DefaultIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/DefaultIPSelector.php) class is used by default if no selector is provided. It returns the ip address from incoming request object. This address can also be of some proxy server forwarding the origninating client's request. This selector can be set explicitly by setting the `ip_selector` config value in `\config\services.php`.
+A [DefaultIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/DefaultIPSelector.php) is used by default if no IP selector is provided. It returns the source IP from the incoming request.
+
+This selector can be set explicitly by setting the `ip_selector` config value in `\config\services.php`.
 
 ```php
 'ipinfo' => [
