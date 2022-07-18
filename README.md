@@ -132,12 +132,57 @@ Default cache TTL and maximum size can be changed by setting values in the `$set
 
 #### Using a different cache
 
-It is possible to use a custom cache by creating a child class of the [CacheInterface](https://github.com/ipinfo/php/blob/master/src/cache/Interface.php) class and setting the the `cache` config value in `\config\services.php`. FYI this is known as [the Strategy Pattern](https://sourcemaking.com/design_patterns/strategy).
+It is possible to use a custom cache by creating a child class of the [CacheInterface](https://github.com/ipinfo/php/blob/master/src/cache/CacheInterface.php) class and setting the the `cache` config value in `\config\services.php`. FYI this is known as [the Strategy Pattern](https://sourcemaking.com/design_patterns/strategy).
 
 ```php
 'ipinfo' => [
     ...
     'cache' => new MyCustomCacheObject(),
+],
+```
+
+### IP Selection Mechanism
+
+By default, the IP from the incoming request is used.
+
+Since the desired IP by your system may be in other locations, the IP selection mechanism is configurable and some alternative built-in options are available.
+
+#### Using built-in ip selectors
+
+##### DefaultIPSelector
+
+A [DefaultIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/DefaultIPSelector.php) is used by default if no IP selector is provided. It returns the source IP from the incoming request.
+
+This selector can be set explicitly by setting the `ip_selector` config value in `\config\services.php`.
+
+```php
+'ipinfo' => [
+    'ip_selector' => new DefaultIPSelector(),
+],
+```
+
+##### OriginatingIPSelector
+
+A [OriginatingIPSelector](https://github.com/ipinfo/php/blob/master/src/iphandler/OriginatingIPSelector.php) selects an IP address by trying to extract it from the `X-Forwarded-For` header. This is not always the most reliable unless your proxy setup allows you to trust it. It will default to the source IP on the request if the header doesn't exist.
+
+This selector can be set by setting the `ip_selector` config value in `\config\services.php`.
+
+```php
+'ipinfo' => [
+    'ip_selector' => new OriginatingIPSelector(),
+],
+```
+
+#### Using a custom IP selector
+
+In case a custom IP selector is required, you may implement the [IPHandlerInterface](https://github.com/ipinfo/php/blob/master/src/iphandler/IPHandlerInterface.php) interface and set the `ip_selector` config value in `\config\services.php`.
+
+For example:
+
+```php
+'ipinfo' => [
+    ...
+    'ip_selector' => new CustomIPSelector(),
 ],
 ```
 
