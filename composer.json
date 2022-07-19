@@ -12,6 +12,11 @@
             "name": "Uman Shahzad",
             "email": "uman@mslm.io",
             "homepage": "https://github.com/UmanShahzad"
+        },
+        {
+            "name": "Soban Mahmood",
+            "email": "soban.mahmood@mslm.io",
+            "homepage": "https://github.com/SobanMahmood"
         }
     ],
     "homepage": "https://github.com/ipinfo/ipinfolaravel",

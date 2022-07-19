@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.4.0
+
+- Added support for a custom IP selector function.
+
 ## v2.3.0
 
 - Added support for Laravel 9 with latest IPinfo PHP package.
