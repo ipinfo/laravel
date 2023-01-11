@@ -14,6 +14,11 @@ You'll need an IPinfo API access token, which you can get by singing up for a fr
 
 The free plan is limited to 50,000 requests per month, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing).
 
+> **Getting errors when installing into a fresh Laravel 9 App?**
+> We are using sabre/cache in our php library and sabre/cache uses psr/simple-cache:1
+>The laravel framework is using psr/simple-cache:3 by default but it supports 1.0 || 2.0 || 3.0 as well. So when you create a fresh laravel project it locks the psr/simple-cache version to 3 in composer.lock file.
+>**The simple solution for this is to change the psr-simple-cache version in composer.lock or just remove the lock file and install our package and composer will automatically create a new lock file with required versions.**
+
 #### Installation
 
 ```
