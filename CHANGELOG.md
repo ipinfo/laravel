@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.6.0
+
+- Updated default cache in latest IPinfo PHP package. Now uses `symfony/cache`.
+
 ## v2.5.0
 
 - Added support for Laravel 10 with latest IPinfo PHP package.
