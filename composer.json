@@ -22,7 +22,7 @@
     "homepage": "https://github.com/ipinfo/ipinfolaravel",
     "keywords": ["Laravel", "ipinfolaravel"],
     "require": {
-        "illuminate/support": ">=7 <11",
+        "illuminate/support": ">=7 <12",
         "ipinfo/ipinfo": "^3.1.0"
     },
     "require-dev": {
