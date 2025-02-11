@@ -23,15 +23,27 @@ class ipinfolaravel
 
     /**
      * Return true to skip IPinfo lookup, otherwise return false.
-     * @var function
+     * @var callable
      */
     public $filter = null;
 
     /**
-     * Provides ip.
+     * IP Handler interface instance.
      * @var ipinfo\ipinfolaravel\iphandler\IPHandlerInterface
      */
     public $ip_selector = null;
+
+    /**
+     * IPinfo client object.
+     * @var IPinfoClient
+     */
+    public $ipinfo = null;
+
+    /**
+     * Boolean flag to handle exceptions.
+     * @var bool
+     */
+    public $no_except = false;
 
     const CACHE_MAXSIZE = 4096;
     const CACHE_TTL = 60 * 24;
@@ -53,12 +65,11 @@ class ipinfolaravel
                 $details = $this->ipinfo->getDetails($this->ip_selector->getIP($request));                
             } catch (\Exception $e) {
                 $details = null;
-
                 // users can't catch this exception with their own wrapper
                 // middleware unfortunately, so we catch it for them. but for
                 // backwards-compatibility, we throw the exception again unless
                 // they've told us not to.
-                if ($this->no_except != true) {
+                if (!$this->no_except) {
                     throw $e;
                 }
             }
@@ -70,14 +81,14 @@ class ipinfolaravel
     }
 
     /**
-     * Determine settings based on user-defined configs or use defaults.
+     * Configure the middleware with user defined settings or defaults.
      */
     public function configure()
     {
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
         $this->no_except = config('services.ipinfo.no_except', false);
-        $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPSelector());
+        $this->ip_selector = config('services.ipinfo.ip_selector', new DefaultIPSelector());
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {
             $this->settings['countries_file'] = $custom_countries;
@@ -95,9 +106,9 @@ class ipinfolaravel
     }
 
     /**
-     * Should IP lookup be skipped.
-     * @param  Request $request Request object.
-     * @return bool Whether or not to filter out.
+     * Default filter to skip IP lookup.
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
      */
     public function defaultFilter($request)
     {
