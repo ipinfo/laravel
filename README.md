@@ -281,6 +281,12 @@ Hello world!
 Details: The IP address 172.20.0.1.
 ```
 
+To run tests within `testapp` while Sail is up:
+
+```bash
+./vendor/bin/sail phpunit
+```
+
 ### Other Libraries
 
 There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails, and Laravel. There are also many third-party libraries and integrations available for our API.
