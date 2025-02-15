@@ -21,11 +21,12 @@
         "ipinfo/ipinfolaravel": "*"
     },
     "require-dev": {
-        "spatie/laravel-ignition": "^2.2",
         "fakerphp/faker": "^1.9.1",
+        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.7",
-        "phpunit/phpunit": "^10.2.2"
+        "phpunit/phpunit": "^10.2.2",
+        "spatie/laravel-ignition": "^2.2"
     },
     "config": {
         "optimize-autoloader": true,
