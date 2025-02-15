@@ -254,6 +254,33 @@ config:
 If an exception occurs when this setting is `true`, the `$request->ipinfo`
 object will be equal to `null`.
 
+### Trying test application with Laravel Sail
+
+Install Laravel Sail with:
+```bash
+cd testapp
+
+docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php84-composer:latest composer install --ignore-platform-reqs
+
+./vendor/bin/sail build --no-cache
+
+./vendor/bin/sail up
+APP_KEY=$(./vendor/bin/sail artisan key:generate --show)
+echo "APP_KEY=${APP_KEY}" > .env
+# kill 'sail up' process
+
+echo "IPINFO_TOKEN=<YOUR_TOKEN>" > app/.env
+
+./vendor/bin/sail up
+```
+
+Visit http://0.0.0.0:80. You should see a message similar to:
+```
+Hello world!
+
+Details: The IP address 172.20.0.1.
+```
+
 ### Other Libraries
 
 There are official IPinfo client libraries available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails, and Laravel. There are also many third-party libraries and integrations available for our API.
