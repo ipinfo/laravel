@@ -14,7 +14,7 @@
     "keywords": ["Laravel", "ipinfolaravel"],
     "require": {
         "illuminate/support": ">=7",
-        "ipinfo/ipinfo": "^3.1.0"
+        "ipinfo/ipinfo": "^3.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6",
@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "ipinfo\\ipinfolaravel\\": "src/"
+            "ipinfo\\ipinfolaravel\\": "src/",
+            "ipinfo\\ipinfolaravel\\lite\\": "src/"
         }
     },
     "autoload-dev": {
