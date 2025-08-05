@@ -64,7 +64,7 @@ class ipinfolaravel
             }
         }
 
-        $request->merge(['ipinfo' => $details]);
+        $request->attributes->set('ipinfo', $details);
 
         return $next($request);
     }
