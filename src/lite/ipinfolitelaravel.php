@@ -1,13 +1,13 @@
 <?php
 
-namespace ipinfo\ipinfolaravel;
+namespace ipinfo\ipinfolaravel\lite;
 
 use Closure;
-use ipinfo\ipinfo\IPinfo as IPinfoClient;
+use ipinfo\ipinfo\IPinfoLite as IPinfoLiteClient;
 use ipinfo\ipinfolaravel\DefaultCache;
 use ipinfo\ipinfolaravel\iphandler\DefaultIPSelector;
 
-class ipinfolaravel
+class ipinfolitelaravel
 {
     /**
      * IPinfo API access token.
@@ -50,7 +50,9 @@ class ipinfolaravel
             $details = null;
         } else {
             try {
-                $details = $this->ipinfo->getDetails($this->ip_selector->getIP($request));                
+                $details = $this->ipinfo->getDetails(
+                    $this->ip_selector->getIP($request),
+                );
             } catch (\Exception $e) {
                 $details = null;
 
@@ -64,7 +66,7 @@ class ipinfolaravel
             }
         }
 
-        $request->attributes->set('ipinfo', $details);
+        $request->attributes->set("ipinfo", $details);
 
         return $next($request);
     }
@@ -74,24 +76,38 @@ class ipinfolaravel
      */
     public function configure()
     {
-        $this->access_token = config('services.ipinfo.access_token', null);
-        $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
-        $this->no_except = config('services.ipinfo.no_except', false);
-        $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPSelector());
+        $this->access_token = config("services.ipinfo.access_token", null);
+        $this->filter = config("services.ipinfo.filter", [
+            $this,
+            "defaultFilter",
+        ]);
+        $this->no_except = config("services.ipinfo.no_except", false);
+        $this->ip_selector = config(
+            "services.ipinfo.ip_selector",
+            new DefaultIPSelector(),
+        );
 
-        if ($custom_countries = config('services.ipinfo.countries_file', null)) {
-            $this->settings['countries_file'] = $custom_countries;
+        if (
+            $custom_countries = config("services.ipinfo.countries_file", null)
+        ) {
+            $this->settings["countries_file"] = $custom_countries;
         }
 
-        if ($custom_cache = config('services.ipinfo.cache', null)) {
-            $this->settings['cache'] = $custom_cache;
+        if ($custom_cache = config("services.ipinfo.cache", null)) {
+            $this->settings["cache"] = $custom_cache;
         } else {
-            $maxsize = config('services.ipinfo.cache_maxsize', self::CACHE_MAXSIZE);
-            $ttl = config('services.ipinfo.cache_ttl', self::CACHE_TTL);
-            $this->settings['cache'] = new DefaultCache($maxsize, $ttl);
+            $maxsize = config(
+                "services.ipinfo.cache_maxsize",
+                self::CACHE_MAXSIZE,
+            );
+            $ttl = config("services.ipinfo.cache_ttl", self::CACHE_TTL);
+            $this->settings["cache"] = new DefaultCache($maxsize, $ttl);
         }
 
-        $this->ipinfo = new IPinfoClient($this->access_token, $this->settings);
+        $this->ipinfo = new IPinfoLiteClient(
+            $this->access_token,
+            $this->settings,
+        );
     }
 
     /**
@@ -101,12 +117,12 @@ class ipinfolaravel
      */
     public function defaultFilter($request)
     {
-        $user_agent = $request->header('user-agent');
+        $user_agent = $request->header("user-agent");
         if ($user_agent) {
             $lower_user_agent = strtolower($user_agent);
 
-            $is_spider = strpos($lower_user_agent, 'spider') !== false;
-            $is_bot = strpos($lower_user_agent, 'bot') !== false;
+            $is_spider = strpos($lower_user_agent, "spider") !== false;
+            $is_bot = strpos($lower_user_agent, "bot") !== false;
 
             return $is_spider || $is_bot;
         }

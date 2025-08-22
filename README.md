@@ -1,10 +1,11 @@
 # [<img src="https://ipinfo.io/static/ipinfo-small.svg" alt="IPinfo" width="24"/>](https://ipinfo.io/) IPinfo Laravel Client Library
 
 This is the official Laravel client library for the [IPinfo.io](https://ipinfo.io) IP address API, allowing you to look up your own IP address, or get any of the following details for an IP:
- - [IP geolocation](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
- - [ASN details](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
- - [Company information](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
- - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
+
+- [IP geolocation](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
+- [ASN details](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
+- [Company information](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
+- [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
 Check all the data we have for your IP address [here](https://ipinfo.io/what-is-my-ip).
 
@@ -14,7 +15,7 @@ You'll need an IPinfo API access token, which you can get by signing up for a fr
 
 The free plan is limited to 50,000 requests per month, and doesn't include some of the data fields such as IP type and company data. To enable all the data fields and additional request volumes see [https://ipinfo.io/pricing](https://ipinfo.io/pricing).
 
-⚠️ Note: This library does not currently support our newest free API https://ipinfo.io/lite. If you’d like to use IPinfo Lite, you can call the [endpoint directly](https://ipinfo.io/developers/lite-api) using your preferred HTTP client. Developers are also welcome to contribute support for Lite by submitting a pull request.
+The library also supports the Lite API, see the [Lite API section](#lite-api) for more info.
 
 #### Installation
 
@@ -122,8 +123,8 @@ In-memory caching of `Details` data is provided by default via Laravel's file-ba
 
 Default cache TTL and maximum size can be changed by setting values in the `$settings` argument array.
 
-* Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
-* Default TTL: 24 hours (in minutes)
+- Default maximum cache size: 4096 (multiples of 2 are recommended to increase efficiency)
+- Default TTL: 24 hours (in minutes)
 
 ```php
 'ipinfo' => [
@@ -223,10 +224,10 @@ By default, `ipinfolaravel` filters out requests that have `bot` or `spider` in 
  ],
 ```
 
-To set your own filtering rules, *thereby replacing the default filter*, you can set `ipinfo.config` to your own, custom callable function which satisfies the following rules:
+To set your own filtering rules, _thereby replacing the default filter_, you can set `ipinfo.config` to your own, custom callable function which satisfies the following rules:
 
-* Accepts one request.
-* Returns *True to filter out, False to allow lookup*
+- Accepts one request.
+- Returns _True to filter out, False to allow lookup_
 
 To use your own filter function:
 
@@ -259,6 +260,7 @@ object will be equal to `null`.
 ### Trying test application with Laravel Sail
 
 Install Laravel Sail with:
+
 ```bash
 cd testapp
 
@@ -277,6 +279,7 @@ echo "IPINFO_TOKEN=<YOUR_TOKEN>" > app/.env
 ```
 
 Visit http://0.0.0.0:80. You should see a message similar to:
+
 ```
 Hello world!
 
@@ -287,6 +290,21 @@ To run tests within `testapp` while Sail is up:
 
 ```bash
 ./vendor/bin/sail phpunit
+```
+
+## Lite API
+
+The library gives the possibility to use the [Lite API](https://ipinfo.io/developers/lite-api) too, authentication with your token is still required.
+
+The returned details are slightly different from the Core API, but it has the same configurations options.
+
+Add the following to the `Kernel::middleware` property:
+
+```php
+protected $middleware = [
+    ...
+    \ipinfo\ipinfolaravel\lite\ipinfolitelaravel::class,
+];
 ```
 
 ### Other Libraries
