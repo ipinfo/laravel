@@ -36,7 +36,7 @@
     "scripts": {
         "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src config",
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src config",
-        "test": "phpunit --colors=always"
+        "test": "phpunit --colors=always --coverage-html=coverage"
     },
     "extra": {
         "laravel": {
