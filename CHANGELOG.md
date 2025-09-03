@@ -2,6 +2,11 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.8.0
+
+- Added support for Laravel 12
+- Added support for IPinfo Lite API
+
 ## v2.7.0
 
 - Added support for Laravel 11
