@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.10.0
+
+- Added support for IPinfo Residential Proxy Detection API
+
 ## v2.9.0
 
 - Added support for IPinfo Core API
