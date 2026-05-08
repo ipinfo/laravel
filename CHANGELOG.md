@@ -2,6 +2,10 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.11.0
+
+- Added support for Laravel 13
+
 ## v2.10.0
 
 - Added support for IPinfo Residential Proxy Detection API
