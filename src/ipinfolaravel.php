@@ -23,15 +23,27 @@ class ipinfolaravel
 
     /**
      * Return true to skip IPinfo lookup, otherwise return false.
-     * @var function
+     * @var callable|null
      */
     public $filter = null;
 
     /**
-     * Provides ip.
+     * IP Handler interface instance.
      * @var ipinfo\ipinfolaravel\iphandler\IPHandlerInterface
      */
     public $ip_selector = null;
+
+    /**
+     * IPinfo client object.
+     * @var IPinfoClient
+     */
+    public $ipinfo = null;
+
+    /**
+     * Boolean flag to handle exceptions.
+     * @var bool
+     */
+    public $no_except = false;
 
     const CACHE_MAXSIZE = 4096;
     const CACHE_TTL = 60 * 24;
@@ -50,7 +62,7 @@ class ipinfolaravel
             $details = null;
         } else {
             try {
-                $details = $this->ipinfo->getDetails($this->ip_selector->getIP($request));                
+                $details = $this->ipinfo->getDetails($this->ip_selector->getIP($request));
             } catch (\Exception $e) {
                 $details = null;
 
@@ -58,7 +70,7 @@ class ipinfolaravel
                 // middleware unfortunately, so we catch it for them. but for
                 // backwards-compatibility, we throw the exception again unless
                 // they've told us not to.
-                if ($this->no_except != true) {
+                if (!$this->no_except) {
                     throw $e;
                 }
             }
