@@ -92,12 +92,14 @@ class IpinfolaravelTest extends TestCase
 
     public function test_handle_throws_if_client_throws_and_no_except_false()
     {
-        $this->expectException(\Exception::class);
+        $expected = new \RuntimeException('Boom! That went wrong.');
+
+        $this->expectExceptionObject($expected);
 
         $client = $this->createMock(IPinfoClient::class);
         $client
             ->method("getDetails")
-            ->willThrowException(new \Exception("fail"));
+            ->willThrowException($expected);
 
         $selector = $this->createMock(IPHandlerInterface::class);
         $selector->method("getIP")->willReturn("1.2.3.4");
