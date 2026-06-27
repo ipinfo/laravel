@@ -7,6 +7,9 @@ use ipinfo\ipinfo\IPinfo as IPinfoClient;
 use ipinfo\ipinfolaravel\iphandler\IPHandlerInterface;
 use Orchestra\Testbench\TestCase;
 use ipinfo\ipinfolaravel\ipinfolaravel;
+use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class IpinfolaravelTest extends TestCase
 {
@@ -21,6 +24,7 @@ class IpinfolaravelTest extends TestCase
         $selector,
         $filter = null,
         $noExcept = false,
+        $noExceptLogLevel = null,
     ) {
         // stub out configure() so it doesn't overwrite our mocks
         $mw = $this->getMockBuilder(ipinfolaravel::class)
@@ -31,6 +35,7 @@ class IpinfolaravelTest extends TestCase
         $mw->ip_selector = $selector;
         $mw->filter = $filter;
         $mw->no_except = $noExcept;
+        $mw->no_except_log_level = $noExceptLogLevel;
         return $mw;
     }
 
@@ -109,7 +114,7 @@ class IpinfolaravelTest extends TestCase
         $mw->handle(Request::create("/", "GET"), function () {});
     }
 
-    public function test_handle_swallows_if_client_throws_and_no_except_true()
+    public function test_handle_swallows_if_client_throws_and_no_except_true_without_logging()
     {
         $client = $this->createMock(IPinfoClient::class);
         $client
@@ -119,7 +124,42 @@ class IpinfolaravelTest extends TestCase
         $selector = $this->createMock(IPHandlerInterface::class);
         $selector->method("getIP")->willReturn("1.2.3.4");
 
+        $logger = $this->makeLog();
+        $logger->expects($this->never())->method('log');
+
         $mw = $this->makeMiddlewareWithMocks($client, $selector, null, true);
+
+        $captured = "unset";
+        $next = function ($req) use (&$captured) {
+            $captured = $req->get("ipinfo");
+            return new Response();
+        };
+
+        $mw->handle(Request::create("/", "GET"), $next);
+        $this->assertNull($captured);
+    }
+
+    public function test_handle_swallows_if_client_throws_and_no_except_true_with_logging()
+    {
+        $client = $this->createMock(IPinfoClient::class);
+        $client
+            ->method("getDetails")
+            ->willThrowException($expected = new \RuntimeException('Boom! That went wrong.'));
+
+        $selector = $this->createMock(IPHandlerInterface::class);
+        $selector->method("getIP")->willReturn("1.2.3.4");
+
+        $logger = $this->makeLog();
+        $logger
+            ->expects($this->once())
+            ->method('log')
+            ->with(
+                LogLevel::ALERT,
+                'ipinfo: ' . $expected->getMessage(),
+                ['exception' => $expected],
+            );
+
+        $mw = $this->makeMiddlewareWithMocks($client, $selector, null, true, LogLevel::ALERT);
 
         $captured = "unset";
         $next = function ($req) use (&$captured) {
@@ -149,5 +189,17 @@ class IpinfolaravelTest extends TestCase
 
         $r4 = Request::create("/", "GET");
         $this->assertFalse($mw->defaultFilter($r4));
+    }
+
+    /**
+     * @return MockObject&LoggerInterface
+     */
+    private function makeLog()
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $this->app->instance(LoggerInterface::class, $logger);
+        $this->app->instance('log', $logger);
+
+        return $logger;
     }
 }
