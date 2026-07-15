@@ -45,6 +45,16 @@ class ipinfolaravel
      */
     public $no_except = false;
 
+    /**
+     * The log level for swallowed exceptions.
+     *
+     * Set to a valid log level, e.g. debug, info, notice etc.
+     * If null, the exception will not be logged.
+     *
+     * @var null
+     */
+    public $no_except_log_level = null;
+
     const CACHE_MAXSIZE = 4096;
     const CACHE_TTL = 60 * 24;
 
@@ -73,6 +83,10 @@ class ipinfolaravel
                 if (!$this->no_except) {
                     throw $e;
                 }
+
+                if (is_string($this->no_except_log_level)) {
+                    logger()->log($this->no_except_log_level, 'ipinfo: ' . $e->getMessage(), ['exception' => $e]);
+                }
             }
         }
 
@@ -89,6 +103,7 @@ class ipinfolaravel
         $this->access_token = config('services.ipinfo.access_token', null);
         $this->filter = config('services.ipinfo.filter', [$this, 'defaultFilter']);
         $this->no_except = config('services.ipinfo.no_except', false);
+        $this->no_except_log_level = config('services.ipinfo.no_except_log_level');
         $this->ip_selector =  config('services.ipinfo.ip_selector', new DefaultIPSelector());
 
         if ($custom_countries = config('services.ipinfo.countries_file', null)) {

@@ -257,6 +257,19 @@ config:
 If an exception occurs when this setting is `true`, the `$request->ipinfo`
 object will be equal to `null`.
 
+If you want the suppressed exception to be logged, you can set the
+`no_except_log_level` to a valid PSR log level. E.g. to log it as a `notice`:
+
+```php
+'ipinfo' => [
+    ...
+    'no_except' => true,
+    'no_except_log_level' => \Psr\Log\LogLevel::NOTICE,
+],
+```
+
+> The default value for `no_except_log_level` is `null`, which means that no logging will occur.
+
 ### Trying test application with Laravel Sail
 
 Install Laravel Sail with:
