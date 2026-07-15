@@ -2,6 +2,11 @@
 
 All notable changes to `ipinfolaravel` will be documented in this file.
 
+## v2.13.0
+
+- Add the `no_except_log_level` config variable to log suppressed exceptions
+  at a configurable log level. Defaults to `null` (no logging).
+
 ## v2.12.0
 
 - Remove deprecation warnings
